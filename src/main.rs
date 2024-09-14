@@ -18,15 +18,15 @@ async fn main() -> web3::Result<()> {
     accounts.push(H160::from_str(&env::var("ACCOUNT_ADDRESS").unwrap()).unwrap());
     println!("Accounts: {:?}", &accounts);
 
-    let wei_conv: U256 = U256::exp10(18);
-    for account in &accounts {
-        let balance = web3s.eth().balance(*account, None).await?;
-        println!(
-            "Eth balance of {:?}: {}",
-            account,
-            balance.checked_div(wei_conv).unwrap()
-        );
-    }
+    // let wei_conv: U256 = U256::exp10(18);
+    // for account in &accounts {
+    //     let balance = web3s.eth().balance(*account, None).await?;
+    //     println!(
+    //         "Eth balance of {:?}: {}",
+    //         account,
+    //         balance.checked_div(wei_conv).unwrap()
+    //     );
+    // }
 
     let router02_addr = Address::from_str("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D").unwrap();
     let router02_contract = Contract::from_json(
