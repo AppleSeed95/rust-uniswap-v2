@@ -36,35 +36,18 @@ async fn main() -> web3::Result<()> {
     )
     .unwrap();
 
-    // let weth_addr: Address = router02_contract
-    //     .query("WETH", (), None, Options::default(), None)
-    //     .await
-    //     .unwrap();
-
-    // println!("WETH address: {:?}", &weth_addr);
-
-    // let dai_address = Address::from_str("0xc7ad46e0b8a400bb3c915120d284aafba8fc4735").unwrap();
-    // let valid_timestamp = get_valid_timestamp(300000);
-    // println!("timemillis: {}", valid_timestamp);
-
-    // let out_gas_estimate = router02_contract
-        .estimate_gas(
-            "swapExactETHForTokens",
-            (
-                U256::from_dec_str("106662000000").unwrap(),
-                vec![weth_addr, dai_address],
-                accounts[0],
-                U256::from_dec_str(&valid_timestamp.to_string()).unwrap(),
-            ),
-            accounts[0],
-            Options {
-                value: Some(U256::exp10(18).checked_div(20.into()).unwrap()),
-                gas: Some(500_000.into()),
-                ..Default::default()
-            },
-        )
+    let weth_addr: Address = router02_contract
+        .query("WETH", (), None, Options::default(), None)
         .await
-        .expect("Error");
+        .unwrap();
+
+    println!("WETH address: {:?}", &weth_addr);
+
+    let dai_address = Address::from_str("0xc7ad46e0b8a400bb3c915120d284aafba8fc4735").unwrap();
+    let valid_timestamp = get_valid_timestamp(300000);
+    println!("timemillis: {}", valid_timestamp);
+
+   
 
     println!("estimated gas amount: {}", out_gas_estimate);
     let gas_price = web3s.eth().gas_price().await.unwrap();
