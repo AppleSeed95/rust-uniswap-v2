@@ -47,7 +47,24 @@ async fn main() -> web3::Result<()> {
     let valid_timestamp = get_valid_timestamp(300000);
     println!("timemillis: {}", valid_timestamp);
 
-   
+    let out_gas_estimate = router02_contract
+        .estimate_gas(
+            "swapExactETHForTokens",
+            (
+                U256::from_dec_str("106662000000").unwrap(),
+                vec![weth_addr, dai_address],
+                accounts[0],
+                U256::from_dec_str(&valid_timestamp.to_string()).unwrap(),
+            ),
+            accounts[0],
+            Options {
+                value: Some(U256::exp10(18).checked_div(20.into()).unwrap()),
+                gas: Some(500_000.into()),
+                ..Default::default()
+            },
+        )
+        .await
+        .expect("Error");
 
     println!("estimated gas amount: {}", out_gas_estimate);
     let gas_price = web3s.eth().gas_price().await.unwrap();
@@ -106,10 +123,3 @@ async fn main() -> web3::Result<()> {
     Ok(())
 }
 
-fn get_valid_timestamp(future_millis: u128) -> u128 {
-    let start = SystemTime::now();
-    let since_epoch = start.duration_since(UNIX_EPOCH).unwrap();
-    let time_millis = since_epoch.as_millis().checked_add(future_millis).unwrap();
-
-    time_millis
-}
