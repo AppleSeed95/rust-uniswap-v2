@@ -36,18 +36,18 @@ async fn main() -> web3::Result<()> {
     )
     .unwrap();
 
-    let weth_addr: Address = router02_contract
-        .query("WETH", (), None, Options::default(), None)
-        .await
-        .unwrap();
+    // let weth_addr: Address = router02_contract
+    //     .query("WETH", (), None, Options::default(), None)
+    //     .await
+    //     .unwrap();
 
-    println!("WETH address: {:?}", &weth_addr);
+    // println!("WETH address: {:?}", &weth_addr);
 
-    let dai_address = Address::from_str("0xc7ad46e0b8a400bb3c915120d284aafba8fc4735").unwrap();
-    let valid_timestamp = get_valid_timestamp(300000);
-    println!("timemillis: {}", valid_timestamp);
+    // let dai_address = Address::from_str("0xc7ad46e0b8a400bb3c915120d284aafba8fc4735").unwrap();
+    // let valid_timestamp = get_valid_timestamp(300000);
+    // println!("timemillis: {}", valid_timestamp);
 
-    let out_gas_estimate = router02_contract
+    // let out_gas_estimate = router02_contract
         .estimate_gas(
             "swapExactETHForTokens",
             (
